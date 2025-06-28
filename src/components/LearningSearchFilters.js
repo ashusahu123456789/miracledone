@@ -45,87 +45,108 @@ function LearningSearchFilters() {
   };
 
   return (
-    <div className="learning-search-filters-new">
+    <div className={`learning-search-filters-new${sidebarVisible ? ' sidebar-visible' : ''}`}>
       <div className="filter-buttons">
-        <button className="filter-button active" onClick={toggleSidebar} aria-label="Toggle Filters Sidebar">
+        <button 
+          className="filter-button active"
+          onClick={toggleSidebar}
+          aria-label="Toggle Filters Sidebar"
+          style={{ display: sidebarVisible ? 'none' : 'flex' }}
+        >
           <span className="hamburger-menu">&#9776;</span> All filters
         </button>
-        
       </div>
 
       {!sidebarVisible && (
         <>
           <div className="filter-dropdowns">
-            <select
-              className="filter-dropdown"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              aria-label="Select Language"
-            >
-              <option>All Languages</option>
-              <option>English</option>
-              <option>Spanish</option>
-              <option>French</option>
-              <option>German</option>
-              <option>Chinese</option>
-            </select>
-            <select
-              className="filter-dropdown"
-              value={ratings}
-              onChange={(e) => setRatings(e.target.value)}
-              aria-label="Select Ratings"
-            >
-              <option>All Ratings</option>
-              <option>5 Stars</option>
-              <option>4 Stars & Up</option>
-              <option>3 Stars & Up</option>
-              <option>2 Stars & Up</option>
-              <option>1 Star & Up</option>
-            </select>
-            <select
-              className="filter-dropdown"
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
-              aria-label="Select Level"
-            >
-              <option>All Levels</option>
-              <option>Beginner</option>
-              <option>Intermediate</option>
-              <option>Advanced</option>
-            </select>
-          </div>
-          <div className="most-relevant-dropdown">
-                          
-
-            <select
-              className="filter-dropdown"
-              value={mostRelevant}
-              onChange={(e) => setMostRelevant(e.target.value)}
-              aria-label="Sort by"
-            >
-              <option>Most Relevant</option>
-              <option>Highest Rated</option>
-              <option>Newest</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-            </select>
+            <div className="animate-roll-left smoke-container">
+              <select
+                className="filter-dropdown"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                aria-label="Select Language"
+              >
+                <option>All Languages</option>
+                <option>English</option>
+                <option>Spanish</option>
+                <option>French</option>
+                <option>German</option>
+                <option>Chinese</option>
+              </select>
+              <div className="smoke"></div>
+            </div>
+            <div className="animate-roll-left smoke-container">
+              <select
+                className="filter-dropdown"
+                value={ratings}
+                onChange={(e) => setRatings(e.target.value)}
+                aria-label="Select Ratings"
+              >
+                <option>All Ratings</option>
+                <option>5 Stars</option>
+                <option>4 Stars & Up</option>
+                <option>3 Stars & Up</option>
+                <option>2 Stars & Up</option>
+                <option>1 Star & Up</option>
+              </select>
+              <div className="smoke"></div>
+            </div>
+            <div className="animate-roll-right smoke-container">
+              <select
+                className="filter-dropdown"
+                value={level}
+                onChange={(e) => setLevel(e.target.value)}
+                aria-label="Select Level"
+              >
+                <option>All Levels</option>
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+              </select>
+              <div className="smoke"></div>
+            </div>
+            <div className="animate-roll-right smoke-container">
+              <select
+                className="filter-dropdown"
+                value={mostRelevant}
+                onChange={(e) => setMostRelevant(e.target.value)}
+                aria-label="Sort by"
+              >
+                <option>Most Relevant</option>
+                <option>Highest Rated</option>
+                <option>Newest</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+              </select>
+              <div className="smoke"></div>
+            </div>
           </div>
         </>
       )}
 
       {sidebarVisible && (
-        <FilterSidebar
-          sortOption={sortOption}
-          handleSortChange={handleSortChange}
-          filters={filters}
-          handleFilterChange={handleFilterChange}
-          categories={categories}
-          priceRanges={priceRanges}
-          ratings={ratingsOptions}
-          deliveryTimes={deliveryTimes}
-          availabilityOptions={availabilityOptions}
-          onClose={toggleSidebar}
-        />
+        <>
+          <div
+            className="filter-overlay"
+            onClick={toggleSidebar}
+            aria-label="Close Filters Overlay"
+          />
+          <div onClick={(e) => e.stopPropagation()}>
+            <FilterSidebar
+              sortOption={sortOption}
+              handleSortChange={handleSortChange}
+              filters={filters}
+              handleFilterChange={handleFilterChange}
+              categories={categories}
+              priceRanges={priceRanges}
+              ratings={ratingsOptions}
+              deliveryTimes={deliveryTimes}
+              availabilityOptions={availabilityOptions}
+              onClose={toggleSidebar}
+            />
+          </div>
+        </>
       )}
     </div>
   );

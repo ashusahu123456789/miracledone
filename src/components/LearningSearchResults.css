@@ -24,7 +24,7 @@
   border: 1px solid #ccc;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   padding: 15px;
-  z-index: 1000;
+  z-index: 10000;
 }
 
 .course-card:hover .course-popup {
@@ -128,6 +128,31 @@
   height: fit-content;
   position: static;
   margin-right: 5px;
+  position: relative;
+}
+
+.close-sidebar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(145deg, #ff0000, #cc0000);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  padding: 4px 8px;
+  line-height: 1;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(255, 0, 0, 0.6);
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+}
+
+.close-sidebar:hover {
+  background: linear-gradient(145deg, #cc0000, #ff0000);
+  box-shadow: 0 6px 8px rgba(255, 0, 0, 0.8);
+  transform: scale(1.1);
 }
 
 .filters-sort-header {
@@ -150,6 +175,7 @@
   margin-bottom: 15px;
   font-size: 20px;
   font-weight: bold;
+  margin-top: 30px;
 }
 
 .filter-group {
@@ -375,4 +401,101 @@
 
 .header.fixed-top {
   z-index: 1200;
+}
+
+/* Animation for filter dropdowns rolling in from left and right with black smoke */
+
+/* Container for smoke effect */
+.smoke-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Black smoke animation */
+@keyframes smoke {
+  0% {
+    opacity: 0.6;
+    transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translateX(-10px) translateY(-20px) scale(1.2) rotate(-10deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20px) translateY(-40px) scale(1.5) rotate(-20deg);
+  }
+}
+
+/* Smoke element */
+.smoke {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%);
+  border-radius: 50%;
+  animation: smoke 3s forwards;
+  pointer-events: none;
+  filter: blur(4px);
+  transform-origin: center;
+}
+
+/* Rolling tire animation from left */
+@keyframes rollInLeft {
+  0% {
+    transform: translateX(-200px) rotate(0deg);
+    opacity: 0;
+  }
+  80% {
+    transform: translateX(20px) rotate(720deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Rolling tire animation from right */
+@keyframes rollInRight {
+  0% {
+    transform: translateX(200px) rotate(0deg);
+    opacity: 0;
+  }
+  80% {
+    transform: translateX(-20px) rotate(-720deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Apply animation to left coming buttons */
+.animate-roll-left {
+  animation: rollInLeft 3s ease forwards;
+  position: relative;
+}
+
+/* Apply animation to right coming buttons */
+.animate-roll-right {
+  animation: rollInRight 3s ease forwards;
+  position: relative;
+}
+
+/* Smoke container positioning for left buttons */
+.animate-roll-left .smoke {
+  top: 100%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+/* Smoke container positioning for right buttons */
+.animate-roll-right .smoke {
+  top: 100%;
+  right: 10%;
+  animation-delay: 0s;
 }

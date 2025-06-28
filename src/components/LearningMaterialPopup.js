@@ -5,7 +5,7 @@
  * 2. LearningMaterialPopup: A popup modal component that collects user contact info, learning material selections, and preferences.
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 /**
  * MultiSelectDropdown component
@@ -16,9 +16,12 @@ import React, { useState, useRef } from 'react';
  * - setSelectedOptions: Function to update the selected options.
  */
 
+
+
 const MultiSelectDropdown = ({ label, options, selectedOptions, setSelectedOptions }) => {
   const [isOpen, setIsOpen] = useState(false);
   const closeTimeoutRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -43,8 +46,22 @@ const MultiSelectDropdown = ({ label, options, selectedOptions, setSelectedOptio
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div
+      ref={dropdownRef}
       className="multi-select-dropdown"
       style={{ marginBottom: '20px', position: 'relative' }}
       onMouseLeave={handleMouseLeave}
